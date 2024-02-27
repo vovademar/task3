@@ -37,5 +37,42 @@ public class BookDAO {
         return books;
     }
 
+    public void addBook(Book book) {
+        String query = "INSERT INTO Book (title, author_id) VALUES (?, ?)";
+        try (PreparedStatement statement = connection.prepareStatement(query)) {
+            statement.setString(1, book.getTitle());
+            System.out.println(book.getTitle());
+            statement.setLong(2, book.getAuthorId());
+            statement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw new RuntimeException("Failed to add book to the database", e);
+        }
+    }
+
+    public void updateBook(Book book) {
+        String query = "UPDATE Book SET title = ?, author_id = ? WHERE id = ?";
+        try (PreparedStatement statement = connection.prepareStatement(query)) {
+            statement.setString(1, book.getTitle());
+            statement.setLong(2, book.getAuthorId());
+            statement.setLong(3, book.getId());
+            statement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw new RuntimeException("Failed to update book in the database", e);
+        }
+    }
+
+    public void deleteBook(long bookId) {
+        String query = "DELETE FROM Book WHERE id = ?";
+        try (PreparedStatement statement = connection.prepareStatement(query)) {
+            statement.setLong(1, bookId);
+            statement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw new RuntimeException("Failed to delete book from the database", e);
+        }
+    }
+
 }
 

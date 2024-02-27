@@ -1,5 +1,6 @@
 package nsu.medvedev.servlets;
 
+import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.SQLException;
@@ -11,7 +12,6 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import nsu.medvedev.DAO.AuthorDAO;
 import nsu.medvedev.DAO.BookDAO;
 import nsu.medvedev.DataBaseConnection;
 import nsu.medvedev.entities.Book;
@@ -45,5 +45,63 @@ public class BookServlet extends HttpServlet {
         out.print(jsonBooks);
         out.flush();
     }
+
+    @Override
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        // Чтение JSON-строки из тела запроса
+        BufferedReader reader = request.getReader();
+        StringBuilder jsonBuilder = new StringBuilder();
+        String line;
+        while ((line = reader.readLine()) != null) {
+            jsonBuilder.append(line);
+        }
+
+        // Преобразование JSON-строки в объект Book
+        Gson gson = new Gson();
+        System.out.println(jsonBuilder + " - jsonbuilder");
+        Book newBook = gson.fromJson(jsonBuilder.toString(), Book.class);
+
+        // Добавление книги в базу данных
+        bookDAO.addBook(newBook);
+
+        // Отправка ответа клиенту
+        response.setContentType("text/plain");
+        response.setStatus(HttpServletResponse.SC_CREATED);
+        PrintWriter out = response.getWriter();
+        out.println("Book added successfully");
+    }
+
+    @Override
+    protected void doPut(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        BufferedReader reader = request.getReader();
+        StringBuilder jsonBuilder = new StringBuilder();
+        String line;
+        while ((line = reader.readLine()) != null) {
+            jsonBuilder.append(line);
+        }
+
+        Gson gson = new Gson();
+        Book updatedBook = gson.fromJson(jsonBuilder.toString(), Book.class);
+
+        bookDAO.updateBook(updatedBook);
+
+        response.setContentType("text/plain");
+        response.setStatus(HttpServletResponse.SC_OK);
+        PrintWriter out = response.getWriter();
+        out.println("Book updated successfully");
+    }
+
+    @Override
+    protected void doDelete(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        long bookId = Long.parseLong(request.getParameter("id"));
+
+        bookDAO.deleteBook(bookId);
+
+        response.setContentType("text/plain");
+        response.setStatus(HttpServletResponse.SC_OK);
+        PrintWriter out = response.getWriter();
+        out.println("Book deleted successfully");
+    }
+
 }
 

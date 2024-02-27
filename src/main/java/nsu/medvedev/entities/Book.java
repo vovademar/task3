@@ -3,15 +3,15 @@ package nsu.medvedev.entities;
 public class Book {
     private Long id;
     private String title;
-    private Long author_id;
+    private Long authorId;
 
     public Book() {
     }
 
-    public Book(Long id, String title, Long author_id) {
+    public Book(Long id, String title, Long authorId) {
         this.id = id;
         this.title = title;
-        this.author_id = author_id;
+        this.authorId = authorId;
     }
 
 
@@ -31,11 +31,11 @@ public class Book {
         this.title = title;
     }
 
-    public Long getAuthor_id() {
-        return author_id;
+    public Long getAuthorId() {
+        return authorId;
     }
 
-    public void setAuthor_id(Long author_id) {
-        this.author_id = author_id;
+    public void setAuthorId(Long author_id) {
+        this.authorId = author_id;
     }
 }
