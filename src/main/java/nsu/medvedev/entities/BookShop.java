@@ -1,11 +1,9 @@
 package nsu.medvedev.entities;
 
-// Класс BookShop
 public class BookShop {
     private Long bookId;
     private Long shopId;
 
-    // Конструкторы
     public BookShop() {
     }
 
@@ -14,7 +12,6 @@ public class BookShop {
         this.shopId = shopId;
     }
 
-    // Геттеры и сеттеры
     public Long getBookId() {
         return bookId;
     }

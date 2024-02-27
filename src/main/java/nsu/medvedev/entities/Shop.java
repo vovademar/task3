@@ -4,7 +4,6 @@ public class Shop {
     private Long id;
     private String name;
 
-    // Конструкторы
     public Shop() {
     }
 
@@ -13,7 +12,6 @@ public class Shop {
         this.name = name;
     }
 
-    // Геттеры и сеттеры
     public Long getId() {
         return id;
     }

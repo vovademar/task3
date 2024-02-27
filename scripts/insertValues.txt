@@ -1,0 +1,22 @@
+-- Вставка тестовых значений в таблицу Author
+INSERT INTO Author (name) VALUES ('Stephen King'), ('J.K. Rowling'), ('George Orwell');
+
+-- Вставка тестовых значений в таблицу Book
+INSERT INTO Book (title, author_id) VALUES
+                                        ('The Shining', 1),
+                                        ('Harry Potter and the Philosopher''s Stone', 2),
+                                        ('1984', 3),
+                                        ('It', 1);
+
+-- Вставка тестовых значений в таблицу Shop
+INSERT INTO Shop (name) VALUES ('Bookstore A'), ('Bookstore B'), ('Bookstore C');
+
+-- Вставка тестовых значений в таблицу BookShop
+INSERT INTO BookShop (book_id, shop_id) VALUES
+                                            (1, 1),
+                                            (1, 2),
+                                            (2, 1),
+                                            (2, 2),
+                                            (3, 2),
+                                            (4, 3),
+                                            (4, 1);

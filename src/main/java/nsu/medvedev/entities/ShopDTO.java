@@ -4,7 +4,6 @@ public class ShopDTO {
     private Long id;
     private String name;
 
-    // Конструкторы
     public ShopDTO() {
     }
 
@@ -13,7 +12,6 @@ public class ShopDTO {
         this.name = name;
     }
 
-    // Геттеры и сеттеры
     public Long getId() {
         return id;
     }

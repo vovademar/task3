@@ -1,11 +1,9 @@
 package nsu.medvedev.entities;
 
-// Класс AuthorDTO
 public class AuthorDTO {
     private Long id;
     private String name;
 
-    // Конструкторы
     public AuthorDTO() {
     }
 
@@ -14,7 +12,6 @@ public class AuthorDTO {
         this.name = name;
     }
 
-    // Геттеры и сеттеры
     public Long getId() {
         return id;
     }
