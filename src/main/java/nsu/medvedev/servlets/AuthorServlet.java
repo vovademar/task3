@@ -33,11 +33,7 @@ public class AuthorServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
 
         List<Author> authors = null;
-        try {
-            authors = authorDAO.getAllAuthors();
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
+        authors = authorDAO.getAllAuthors();
 
         Gson gson = new Gson();
         String jsonAuthors = gson.toJson(authors);

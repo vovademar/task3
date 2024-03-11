@@ -1,17 +1,23 @@
 package nsu.medvedev.entities;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Book {
     private Long id;
     private String title;
+    private List<Shop> shops;
     private Long authorId;
+
 
     public Book() {
     }
 
-    public Book(Long id, String title, Long authorId) {
+    public Book(Long id, String title, Long author) {
         this.id = id;
         this.title = title;
-        this.authorId = authorId;
+        this.authorId = author;
+        this.shops = new ArrayList<>();
     }
 
 
@@ -31,11 +37,19 @@ public class Book {
         this.title = title;
     }
 
+    public List<Shop> getShops() {
+        return shops;
+    }
+
+    public void setShops(List<Shop> shops) {
+        this.shops = shops;
+    }
+
     public Long getAuthorId() {
         return authorId;
     }
 
-    public void setAuthorId(Long author_id) {
-        this.authorId = author_id;
+    public void setAuthorId(Long authorId) {
+        this.authorId = authorId;
     }
 }
