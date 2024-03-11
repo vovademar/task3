@@ -1,15 +1,20 @@
 package nsu.medvedev.entities;
 
+import java.util.List;
+
 public class Shop {
     private Long id;
     private String name;
 
+    private List<Book> books;
+
     public Shop() {
     }
 
-    public Shop(Long id, String name) {
+    public Shop(Long id, String name, List<Book> books) {
         this.id = id;
         this.name = name;
+        this.books = books;
     }
 
     public Long getId() {
@@ -26,5 +31,13 @@ public class Shop {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public List<Book> getBooks() {
+        return books;
+    }
+
+    public void setBooks(List<Book> books) {
+        this.books = books;
     }
 }

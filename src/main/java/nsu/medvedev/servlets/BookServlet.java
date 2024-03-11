@@ -32,14 +32,11 @@ public class BookServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        // Получаем список книг из базы данных
         List<Book> books = bookDAO.getAllBooks();
 
-        // Преобразуем список книг в формат JSON
         Gson gson = new Gson();
         String jsonBooks = gson.toJson(books);
 
-        // Устанавливаем тип контента и отправляем JSON клиенту
         response.setContentType("application/json");
         PrintWriter out = response.getWriter();
         out.print(jsonBooks);
@@ -48,7 +45,6 @@ public class BookServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        // Чтение JSON-строки из тела запроса
         BufferedReader reader = request.getReader();
         StringBuilder jsonBuilder = new StringBuilder();
         String line;
@@ -56,15 +52,12 @@ public class BookServlet extends HttpServlet {
             jsonBuilder.append(line);
         }
 
-        // Преобразование JSON-строки в объект Book
         Gson gson = new Gson();
         System.out.println(jsonBuilder + " - jsonbuilder");
         Book newBook = gson.fromJson(jsonBuilder.toString(), Book.class);
 
-        // Добавление книги в базу данных
         bookDAO.addBook(newBook);
 
-        // Отправка ответа клиенту
         response.setContentType("text/plain");
         response.setStatus(HttpServletResponse.SC_CREATED);
         PrintWriter out = response.getWriter();
