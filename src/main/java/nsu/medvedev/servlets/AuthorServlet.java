@@ -7,7 +7,6 @@ import java.sql.SQLException;
 import java.util.List;
 
 import com.google.gson.Gson;
-import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
@@ -15,6 +14,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import nsu.medvedev.DAO.AuthorDAO;
 import nsu.medvedev.DataBaseConnection;
 import nsu.medvedev.entities.Author;
+import nsu.medvedev.entities.Book;
 
 @WebServlet("/authors")
 public class AuthorServlet extends HttpServlet {
@@ -64,5 +64,37 @@ public class AuthorServlet extends HttpServlet {
         response.setStatus(HttpServletResponse.SC_CREATED);
         PrintWriter out = response.getWriter();
         out.println("Author added successfully");
+    }
+
+    @Override
+    protected void doPut(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        BufferedReader reader = request.getReader();
+        StringBuilder jsonBuilder = new StringBuilder();
+        String line;
+        while ((line = reader.readLine()) != null) {
+            jsonBuilder.append(line);
+        }
+
+        Gson gson = new Gson();
+        Author updatedAuthor = gson.fromJson(jsonBuilder.toString(), Author.class);
+
+        authorDAO.updateAuthor(updatedAuthor);
+
+        response.setContentType("text/plain");
+        response.setStatus(HttpServletResponse.SC_OK);
+        PrintWriter out = response.getWriter();
+        out.println("Author updated successfully");
+    }
+
+    @Override
+    protected void doDelete(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        long authorId = Long.parseLong(request.getParameter("id"));
+
+        authorDAO.deleteAuthor(authorId);
+
+        response.setContentType("text/plain");
+        response.setStatus(HttpServletResponse.SC_OK);
+        PrintWriter out = response.getWriter();
+        out.println("Book deleted successfully");
     }
 }

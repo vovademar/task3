@@ -72,4 +72,33 @@ public class AuthorDAO {
             throw new RuntimeException("Failed to add author to the database", e);
         }
     }
+
+    public void updateAuthor(Author author) {
+        String query = "UPDATE Author SET name = ? WHERE id = ?";
+        try (PreparedStatement statement = connection.prepareStatement(query)) {
+            statement.setString(1, author.getName());
+            statement.setLong(2, author.getId());
+            int rowsUpdated = statement.executeUpdate();
+            if (rowsUpdated == 0) {
+                throw new SQLException("Failed to update author with id " + author.getId());
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw new RuntimeException("Failed to update author in the database", e);
+        }
+    }
+
+
+    public void deleteAuthor(long authorId) {
+        String query = "DELETE FROM Author WHERE id = ?";
+        try (PreparedStatement statement = connection.prepareStatement(query)) {
+            statement.setLong(1, authorId);
+            int rowsUpdated = statement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw new RuntimeException("Failed to update author in the database", e);
+        }
+    }
+
+
 }
