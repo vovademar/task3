@@ -43,7 +43,7 @@ public class AuthorDAO {
             while (resultSet.next()) {
                 long id = resultSet.getLong("id");
                 String title = resultSet.getString("title");
-                Book book = new Book(id, title, null); // Возвращаем книгу без ссылки на автора
+                Book book = new Book(id, title, null);
                 books.add(book);
             }
         } catch (SQLException e) {
@@ -51,5 +51,25 @@ public class AuthorDAO {
             throw new RuntimeException("Failed to fetch books from the database", e);
         }
         return books;
+    }
+
+    public void addAuthor(Author author) {
+        String query = "INSERT INTO Author (name) VALUES (?)";
+        try (PreparedStatement statement = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS)) {
+            statement.setString(1, author.getName());
+            int rowsInserted = statement.executeUpdate();
+            if (rowsInserted == 0) {
+                throw new SQLException("Failed to insert author into database");
+            }
+            ResultSet generatedKeys = statement.getGeneratedKeys();
+            if (generatedKeys.next()) {
+                author.setId(generatedKeys.getLong(1)); // Устанавливаем ID автора, сгенерированный базой данных
+            } else {
+                throw new SQLException("Failed to get generated key for inserted author");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw new RuntimeException("Failed to add author to the database", e);
+        }
     }
 }

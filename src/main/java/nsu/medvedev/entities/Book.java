@@ -7,16 +7,16 @@ public class Book {
     private Long id;
     private String title;
     private List<Shop> shops;
-    private Long authorId;
+    private Author author;
 
 
     public Book() {
     }
 
-    public Book(Long id, String title, Long author) {
+    public Book(Long id, String title, Author author) {
         this.id = id;
         this.title = title;
-        this.authorId = author;
+        this.author = author;
         this.shops = new ArrayList<>();
     }
 
@@ -45,11 +45,12 @@ public class Book {
         this.shops = shops;
     }
 
-    public Long getAuthorId() {
-        return authorId;
+
+    public Author getAuthor() {
+        return author;
     }
 
-    public void setAuthorId(Long authorId) {
-        this.authorId = authorId;
+    public void setAuthor(Author author) {
+        this.author = author;
     }
 }

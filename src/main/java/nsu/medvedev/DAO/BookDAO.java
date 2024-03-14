@@ -24,7 +24,7 @@ public class BookDAO {
                 String title = resultSet.getString("title");
                 long authorId = resultSet.getLong("author_id");
                 Author author = getAuthorById(authorId); // Получаем автора книги из базы данных
-                Book book = new Book(id, title, authorId);
+                Book book = new Book(id, title, author);
                 books.add(book);
             }
         } catch (SQLException e) {
@@ -38,7 +38,7 @@ public class BookDAO {
         String query = "UPDATE Book SET title = ?, author_id = ? WHERE id = ?";
         try (PreparedStatement statement = connection.prepareStatement(query)) {
             statement.setString(1, book.getTitle());
-            statement.setLong(2, book.getAuthorId());
+            statement.setLong(2, book.getAuthor().getId());
             statement.setLong(3, book.getId());
             statement.executeUpdate();
         } catch (SQLException e) {
@@ -80,7 +80,7 @@ public class BookDAO {
         String query = "INSERT INTO Book (title, author_id) VALUES (?, ?)";
         try (PreparedStatement statement = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS)) {
             statement.setString(1, book.getTitle());
-            statement.setLong(2, book.getAuthorId());
+            statement.setLong(2, book.getAuthor().getId());
             int rowsInserted = statement.executeUpdate();
             if (rowsInserted == 0) {
                 throw new SQLException("Failed to insert book into database");

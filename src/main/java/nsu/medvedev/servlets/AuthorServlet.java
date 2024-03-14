@@ -1,5 +1,6 @@
 package nsu.medvedev.servlets;
 
+import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.SQLException;
@@ -32,7 +33,7 @@ public class AuthorServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
 
-        List<Author> authors = null;
+        List<Author> authors;
         authors = authorDAO.getAllAuthors();
 
         Gson gson = new Gson();
@@ -42,5 +43,26 @@ public class AuthorServlet extends HttpServlet {
         PrintWriter out = response.getWriter();
         out.print(jsonAuthors);
         out.flush();
+    }
+
+
+    @Override
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        BufferedReader reader = request.getReader();
+        StringBuilder jsonBuilder = new StringBuilder();
+        String line;
+        while ((line = reader.readLine()) != null) {
+            jsonBuilder.append(line);
+        }
+
+        Gson gson = new Gson();
+        Author newAuthor = gson.fromJson(jsonBuilder.toString(), Author.class);
+
+        authorDAO.addAuthor(newAuthor);
+
+        response.setContentType("text/plain");
+        response.setStatus(HttpServletResponse.SC_CREATED);
+        PrintWriter out = response.getWriter();
+        out.println("Author added successfully");
     }
 }
