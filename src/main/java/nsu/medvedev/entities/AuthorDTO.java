@@ -1,15 +1,19 @@
 package nsu.medvedev.entities;
 
+import java.util.List;
+
 public class AuthorDTO {
     private Long id;
     private String name;
+    private List<Book> booksDTO;
 
-    public AuthorDTO() {
-    }
-
-    public AuthorDTO(Long id, String name) {
+    public AuthorDTO(Long id, String name, List<Book> booksDTO) {
         this.id = id;
         this.name = name;
+        this.booksDTO = booksDTO;
+    }
+
+    public AuthorDTO() {
     }
 
     public Long getId() {
@@ -26,5 +30,13 @@ public class AuthorDTO {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public List<Book> getBooksDTO() {
+        return booksDTO;
+    }
+
+    public void setBooksDTO(List<Book> booksDTO) {
+        this.booksDTO = booksDTO;
     }
 }

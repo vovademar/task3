@@ -22,16 +22,14 @@ public class ShopDAO {
     public List<Shop> getAllShops() {
         List<Shop> shops = new ArrayList<>();
         String query = """
-                select shop_id, S.name, B.title from bookshop
+                select shop_id, S.name from bookshop
                 inner join Shop S on S.id = bookshop.shop_id
-                inner join Book B on B.id = bookshop.book_id
                 """;
         try (PreparedStatement statement = connection.prepareStatement(query)) {
             ResultSet resultSet = statement.executeQuery();
             while (resultSet.next()) {
                 long id = resultSet.getLong("shop_id");
                 String name = resultSet.getString("name");
-                String title = resultSet.getString("title");
                 List<Book> books = getBooksByShopId(id);
                 Shop shop = new Shop(id, name, books);
                 shops.add(shop);
