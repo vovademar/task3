@@ -23,7 +23,7 @@ public class BookDAO {
                 long id = resultSet.getLong("id");
                 String title = resultSet.getString("title");
                 long authorId = resultSet.getLong("author_id");
-                Author author = getAuthorById(authorId); // Получаем автора книги из базы данных
+                Author author = getAuthorById(authorId);
                 Book book = new Book(id, title, author);
                 books.add(book);
             }
