@@ -1,14 +1,23 @@
 package nsu.medvedev.entities;
 
+import com.google.gson.annotations.Expose;
+
+import java.beans.Transient;
+import java.util.ArrayList;
 import java.util.List;
 
 public class Shop {
     private Long id;
     private String name;
-
     private List<Book> books;
 
     public Shop() {
+    }
+
+    public Shop(Long id, String name) {
+        this.id = id;
+        this.name = name;
+        this.books = new ArrayList<>();
     }
 
     public Shop(Long id, String name, List<Book> books) {

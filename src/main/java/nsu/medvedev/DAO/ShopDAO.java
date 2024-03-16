@@ -30,9 +30,12 @@ public class ShopDAO {
             while (resultSet.next()) {
                 long id = resultSet.getLong("shop_id");
                 String name = resultSet.getString("name");
-                List<Book> books = getBooksByShopId(id);
-                Shop shop = new Shop(id, name, books);
-                shops.add(shop);
+                boolean shopExists = shops.stream().anyMatch(shop -> shop.getId() == id);
+                if (!shopExists) {
+                    List<Book> books = getBooksByShopId(id);
+                    Shop shop = new Shop(id, name, books);
+                    shops.add(shop);
+                }
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -65,5 +68,9 @@ public class ShopDAO {
             throw new RuntimeException("Failed to fetch books from the database", e);
         }
         return books;
+    }
+
+    public void addShop(Shop shop){
+
     }
 }

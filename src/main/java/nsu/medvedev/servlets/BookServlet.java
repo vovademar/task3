@@ -1,11 +1,5 @@
 package nsu.medvedev.servlets;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.PrintWriter;
-import java.sql.SQLException;
-import java.util.List;
-
 import com.google.gson.Gson;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -15,6 +9,12 @@ import jakarta.servlet.http.HttpServletResponse;
 import nsu.medvedev.DAO.BookDAO;
 import nsu.medvedev.DataBaseConnection;
 import nsu.medvedev.entities.Book;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.sql.SQLException;
+import java.util.List;
 
 @WebServlet("/books")
 public class BookServlet extends HttpServlet {

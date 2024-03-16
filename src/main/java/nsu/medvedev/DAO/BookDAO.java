@@ -2,6 +2,7 @@ package nsu.medvedev.DAO;
 
 import nsu.medvedev.entities.Author;
 import nsu.medvedev.entities.Book;
+import nsu.medvedev.entities.Shop;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -23,8 +24,9 @@ public class BookDAO {
                 long id = resultSet.getLong("id");
                 String title = resultSet.getString("title");
                 long authorId = resultSet.getLong("author_id");
+                List<Shop> shops = getShopsByID(id);
                 Author author = getAuthorById(authorId);
-                Book book = new Book(id, title, author);
+                Book book = new Book(id, title, author, shops);
                 books.add(book);
             }
         } catch (SQLException e) {
@@ -32,6 +34,29 @@ public class BookDAO {
             throw new RuntimeException("Failed to fetch books from the database", e);
         }
         return books;
+    }
+
+    public List<Shop> getShopsByID(long bookId){
+        List<Shop> shops = new ArrayList<>();
+        String query = """
+                SELECT shop_id, name FROM Book
+                inner join BookShop BS on Book.id = BS.book_id
+                inner join Shop S on S.id = BS.shop_id
+                where book_id = ?;
+                """;
+        try(PreparedStatement statement = connection.prepareStatement(query)) {
+            statement.setLong(1, bookId);
+            ResultSet resultSet = statement.executeQuery();
+            while (resultSet.next()) {
+                long id = resultSet.getLong("shop_id");
+                String name = resultSet.getString("name");
+                Shop shop = new Shop(id,name);
+                shops.add(shop);
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return shops;
     }
 
     public void updateBook(Book book) {
@@ -95,6 +120,26 @@ public class BookDAO {
             e.printStackTrace();
             throw new RuntimeException("Failed to add book to the database", e);
         }
+
+        String query1 = """
+                INSERT INTO bookshop (book_id, shop_id)
+                VALUES ((SELECT id from Book where title = ?), (SELECT id from shop where name = ?));
+                """;
+        try (PreparedStatement statement = connection.prepareStatement(query1)) {
+            System.out.println(book.getShops().getFirst().getName() + " - shop");
+            statement.setString(1, book.getTitle());
+            statement.setString(2, book.getShops().getFirst().getName());
+            System.out.println(statement + " - statement");
+            int rowsInserted = statement.executeUpdate();
+
+            if (rowsInserted == 0) {
+                throw new SQLException("Failed to insert book into database");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw new RuntimeException("Failed to add book to the database", e);
+        }
+
     }
 }
 

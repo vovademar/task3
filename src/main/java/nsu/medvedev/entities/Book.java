@@ -6,8 +6,8 @@ import java.util.List;
 public class Book {
     private Long id;
     private String title;
-    private List<Shop> shops;
     private Author author;
+    private List<Shop> shops;
 
 
     public Book() {
@@ -18,6 +18,13 @@ public class Book {
         this.title = title;
         this.author = author;
         this.shops = new ArrayList<>();
+    }
+
+    public Book(Long id, String title, Author author, List<Shop> shops) {
+        this.id = id;
+        this.title = title;
+        this.author = author;
+        this.shops = shops;
     }
 
 
