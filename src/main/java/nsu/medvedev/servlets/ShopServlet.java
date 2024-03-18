@@ -12,6 +12,7 @@ import nsu.medvedev.DataBaseConnection;
 import nsu.medvedev.entities.Book;
 import nsu.medvedev.entities.Shop;
 
+import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.SQLException;
@@ -42,6 +43,27 @@ public class ShopServlet extends HttpServlet {
         PrintWriter out = response.getWriter();
         out.print(jsonBooks);
         out.flush();
+    }
+
+    @Override
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        BufferedReader reader = request.getReader();
+        StringBuilder jsonBuilder = new StringBuilder();
+        String line;
+        while ((line = reader.readLine()) != null) {
+            jsonBuilder.append(line);
+        }
+
+        Gson gson = new Gson();
+        System.out.println(jsonBuilder + " - jsonbuilder");
+        Shop newShop = gson.fromJson(jsonBuilder.toString(), Shop.class);
+
+        shopDAO.addShop(newShop);
+
+        response.setContentType("text/plain");
+        response.setStatus(HttpServletResponse.SC_CREATED);
+        PrintWriter out = response.getWriter();
+        out.println("Shop added successfully");
     }
 
 }

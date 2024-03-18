@@ -22,13 +22,12 @@ public class ShopDAO {
     public List<Shop> getAllShops() {
         List<Shop> shops = new ArrayList<>();
         String query = """
-                select shop_id, S.name from bookshop
-                inner join Shop S on S.id = bookshop.shop_id
+                select id, name from Shop
                 """;
         try (PreparedStatement statement = connection.prepareStatement(query)) {
             ResultSet resultSet = statement.executeQuery();
             while (resultSet.next()) {
-                long id = resultSet.getLong("shop_id");
+                long id = resultSet.getLong("id");
                 String name = resultSet.getString("name");
                 boolean shopExists = shops.stream().anyMatch(shop -> shop.getId() == id);
                 if (!shopExists) {
@@ -70,7 +69,17 @@ public class ShopDAO {
         return books;
     }
 
-    public void addShop(Shop shop){
+    public void addShop(Shop shop) {
+        String query = "INSERT INTO Shop (name) VALUES (?)";
+        try (PreparedStatement statement = connection.prepareStatement(query)) {
+            statement.setString(1, shop.getName());
+            statement.executeUpdate();
+        } catch (SQLException e) {
+            throw new RuntimeException("Failed to add shop to the database", e);
+        }
+    }
 
+    public void updateShop(Shop shop){
+        String query = "";
     }
 }
