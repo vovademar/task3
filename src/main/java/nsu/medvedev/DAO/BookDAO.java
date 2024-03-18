@@ -2,6 +2,7 @@ package nsu.medvedev.DAO;
 
 import nsu.medvedev.entities.Author;
 import nsu.medvedev.entities.Book;
+import nsu.medvedev.entities.BookDTO;
 import nsu.medvedev.entities.Shop;
 
 import java.sql.*;
@@ -15,8 +16,8 @@ public class BookDAO {
 
     private final Connection connection;
 
-    public List<Book> getAllBooks() {
-        List<Book> books = new ArrayList<>();
+    public List<BookDTO> getAllBooks() {
+        List<BookDTO> books = new ArrayList<>();
         String query = "SELECT id, title, author_id FROM Book";
         try (PreparedStatement statement = connection.prepareStatement(query)) {
             ResultSet resultSet = statement.executeQuery();
@@ -26,7 +27,8 @@ public class BookDAO {
                 long authorId = resultSet.getLong("author_id");
                 List<Shop> shops = getShopsByID(id);
                 Author author = getAuthorById(authorId);
-                Book book = new Book(id, title, author, shops);
+
+                BookDTO book = new BookDTO(id, title, author, shops);
                 books.add(book);
             }
         } catch (SQLException e) {
@@ -59,7 +61,7 @@ public class BookDAO {
         return shops;
     }
 
-    public void updateBook(Book book) {
+    public void updateBook(BookDTO book) {
         String query = "UPDATE Book SET title = ?, author_id = ? WHERE id = ?";
         try (PreparedStatement statement = connection.prepareStatement(query)) {
             statement.setString(1, book.getTitle());
@@ -101,7 +103,7 @@ public class BookDAO {
         }
     }
 
-    public void addBook(Book book) {
+    public void addBook(BookDTO book) {
         String query = "INSERT INTO Book (title, author_id) VALUES (?, ?)";
         try (PreparedStatement statement = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS)) {
             statement.setString(1, book.getTitle());

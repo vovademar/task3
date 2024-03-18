@@ -1,6 +1,6 @@
 package nsu.medvedev.DAO;
 
-import nsu.medvedev.entities.Author;
+import nsu.medvedev.entities.AuthorDTO;
 import nsu.medvedev.entities.Book;
 
 import java.sql.*;
@@ -15,16 +15,16 @@ public class AuthorDAO {
 
     private final Connection connection;
 
-    public List<Author> getAllAuthors() {
-        List<Author> authors = new ArrayList<>();
+    public List<AuthorDTO> getAllAuthors() {
+        List<AuthorDTO> authors = new ArrayList<>();
         String query = "SELECT id, name FROM Author";
         try (PreparedStatement statement = connection.prepareStatement(query)) {
             ResultSet resultSet = statement.executeQuery();
             while (resultSet.next()) {
                 long id = resultSet.getLong("id");
                 String name = resultSet.getString("name");
-                List<Book> books = getBooksByAuthorId(id); // Получаем список книг автора из базы данных
-                Author author = new Author(id, name, books);
+                List<Book> books = getBooksByAuthorId(id);
+                AuthorDTO author = new AuthorDTO(id, name, books);
                 authors.add(author);
             }
         } catch (SQLException e) {
@@ -53,7 +53,7 @@ public class AuthorDAO {
         return books;
     }
 
-    public void addAuthor(Author author) {
+    public void addAuthor(AuthorDTO author) {
         String query = "INSERT INTO Author (name) VALUES (?)";
         try (PreparedStatement statement = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS)) {
             statement.setString(1, author.getName());
@@ -73,7 +73,7 @@ public class AuthorDAO {
         }
     }
 
-    public void updateAuthor(Author author) {
+    public void updateAuthor(AuthorDTO author) {
         String query = "UPDATE Author SET name = ? WHERE id = ?";
         try (PreparedStatement statement = connection.prepareStatement(query)) {
             statement.setString(1, author.getName());

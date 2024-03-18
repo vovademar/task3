@@ -1,17 +1,35 @@
 package nsu.medvedev.entities;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class BookDTO {
     private Long id;
     private String title;
 
-    private List<Shop> shopsDTO;
+    private List<Shop> shops;
 
     private Author author;
 
     public Long getId() {
         return id;
+    }
+
+    public BookDTO() {
+    }
+
+    public BookDTO(Long id, String title, Author author) {
+        this.id = id;
+        this.title = title;
+        this.author = author;
+        this.shops = new ArrayList<>();
+    }
+
+    public BookDTO(Long id, String title, Author author, List<Shop> shops) {
+        this.id = id;
+        this.title = title;
+        this.author = author;
+        this.shops = shops;
     }
 
     public void setId(Long id) {
@@ -26,12 +44,12 @@ public class BookDTO {
         this.title = title;
     }
 
-    public List<Shop> getShopsDTO() {
-        return shopsDTO;
+    public List<Shop> getShops() {
+        return shops;
     }
 
-    public void setShopsDTO(List<Shop> shopsDTO) {
-        this.shopsDTO = shopsDTO;
+    public void setShops(List<Shop> shops) {
+        this.shops = shops;
     }
 
     public Author getAuthor() {

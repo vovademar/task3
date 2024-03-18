@@ -5,12 +5,12 @@ import java.util.List;
 public class AuthorDTO {
     private Long id;
     private String name;
-    private List<Book> booksDTO;
+    private List<Book> books;
 
-    public AuthorDTO(Long id, String name, List<Book> booksDTO) {
+    public AuthorDTO(Long id, String name, List<Book> books) {
         this.id = id;
         this.name = name;
-        this.booksDTO = booksDTO;
+        this.books = books;
     }
 
     public AuthorDTO() {
@@ -32,11 +32,11 @@ public class AuthorDTO {
         this.name = name;
     }
 
-    public List<Book> getBooksDTO() {
-        return booksDTO;
+    public List<Book> getBooks() {
+        return books;
     }
 
-    public void setBooksDTO(List<Book> booksDTO) {
-        this.booksDTO = booksDTO;
+    public void setBooks(List<Book> books) {
+        this.books = books;
     }
 }

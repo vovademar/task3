@@ -9,6 +9,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import nsu.medvedev.DAO.BookDAO;
 import nsu.medvedev.DataBaseConnection;
 import nsu.medvedev.entities.Book;
+import nsu.medvedev.entities.BookDTO;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -32,7 +33,7 @@ public class BookServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        List<Book> books = bookDAO.getAllBooks();
+        List<BookDTO> books = bookDAO.getAllBooks();
 
         Gson gson = new Gson();
         String jsonBooks = gson.toJson(books);
@@ -54,7 +55,7 @@ public class BookServlet extends HttpServlet {
 
         Gson gson = new Gson();
         System.out.println(jsonBuilder + " - jsonbuilder");
-        Book newBook = gson.fromJson(jsonBuilder.toString(), Book.class);
+        BookDTO newBook = gson.fromJson(jsonBuilder.toString(), BookDTO.class);
 
         bookDAO.addBook(newBook);
 
@@ -74,7 +75,7 @@ public class BookServlet extends HttpServlet {
         }
 
         Gson gson = new Gson();
-        Book updatedBook = gson.fromJson(jsonBuilder.toString(), Book.class);
+        BookDTO updatedBook = gson.fromJson(jsonBuilder.toString(), BookDTO.class);
 
         bookDAO.updateBook(updatedBook);
 

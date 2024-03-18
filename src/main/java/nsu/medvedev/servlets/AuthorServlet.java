@@ -1,11 +1,5 @@
 package nsu.medvedev.servlets;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.PrintWriter;
-import java.sql.SQLException;
-import java.util.List;
-
 import com.google.gson.Gson;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -14,7 +8,13 @@ import jakarta.servlet.http.HttpServletResponse;
 import nsu.medvedev.DAO.AuthorDAO;
 import nsu.medvedev.DataBaseConnection;
 import nsu.medvedev.entities.Author;
-import nsu.medvedev.entities.Book;
+import nsu.medvedev.entities.AuthorDTO;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.sql.SQLException;
+import java.util.List;
 
 @WebServlet("/authors")
 public class AuthorServlet extends HttpServlet {
@@ -33,7 +33,7 @@ public class AuthorServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
 
-        List<Author> authors;
+        List<AuthorDTO> authors;
         authors = authorDAO.getAllAuthors();
 
         Gson gson = new Gson();
@@ -56,7 +56,7 @@ public class AuthorServlet extends HttpServlet {
         }
 
         Gson gson = new Gson();
-        Author newAuthor = gson.fromJson(jsonBuilder.toString(), Author.class);
+        AuthorDTO newAuthor = gson.fromJson(jsonBuilder.toString(), AuthorDTO.class);
 
         authorDAO.addAuthor(newAuthor);
 
@@ -76,7 +76,7 @@ public class AuthorServlet extends HttpServlet {
         }
 
         Gson gson = new Gson();
-        Author updatedAuthor = gson.fromJson(jsonBuilder.toString(), Author.class);
+        AuthorDTO updatedAuthor = gson.fromJson(jsonBuilder.toString(), AuthorDTO.class);
 
         authorDAO.updateAuthor(updatedAuthor);
 

@@ -2,7 +2,7 @@ package nsu.medvedev.DAO;
 
 import nsu.medvedev.entities.Author;
 import nsu.medvedev.entities.Book;
-import nsu.medvedev.entities.Shop;
+import nsu.medvedev.entities.ShopDTO;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -19,8 +19,8 @@ public class ShopDAO {
     private final Connection connection;
 
 
-    public List<Shop> getAllShops() {
-        List<Shop> shops = new ArrayList<>();
+    public List<ShopDTO> getAllShops() {
+        List<ShopDTO> shops = new ArrayList<>();
         String query = """
                 select id, name from Shop
                 """;
@@ -32,7 +32,7 @@ public class ShopDAO {
                 boolean shopExists = shops.stream().anyMatch(shop -> shop.getId() == id);
                 if (!shopExists) {
                     List<Book> books = getBooksByShopId(id);
-                    Shop shop = new Shop(id, name, books);
+                    ShopDTO shop = new ShopDTO(id, name, books);
                     shops.add(shop);
                 }
             }
@@ -69,7 +69,7 @@ public class ShopDAO {
         return books;
     }
 
-    public void addShop(Shop shop) {
+    public void addShop(ShopDTO shop) {
         String query = "INSERT INTO Shop (name) VALUES (?)";
         try (PreparedStatement statement = connection.prepareStatement(query)) {
             statement.setString(1, shop.getName());
@@ -79,7 +79,7 @@ public class ShopDAO {
         }
     }
 
-    public void updateShop(Shop shop) {
+    public void updateShop(ShopDTO shop) {
         String query = "UPDATE Shop SET name = ? WHERE id = ?";
         try (PreparedStatement statement = connection.prepareStatement(query)) {
             statement.setString(1, shop.getName());

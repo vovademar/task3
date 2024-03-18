@@ -11,6 +11,7 @@ import nsu.medvedev.DAO.ShopDAO;
 import nsu.medvedev.DataBaseConnection;
 import nsu.medvedev.entities.Book;
 import nsu.medvedev.entities.Shop;
+import nsu.medvedev.entities.ShopDTO;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -34,7 +35,7 @@ public class ShopServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        List<Shop> shops = shopDAO.getAllShops();
+        List<ShopDTO> shops = shopDAO.getAllShops();
 
         Gson gson = new Gson();
         String jsonBooks = gson.toJson(shops);
@@ -56,7 +57,7 @@ public class ShopServlet extends HttpServlet {
 
         Gson gson = new Gson();
         System.out.println(jsonBuilder + " - jsonbuilder");
-        Shop newShop = gson.fromJson(jsonBuilder.toString(), Shop.class);
+        ShopDTO newShop = gson.fromJson(jsonBuilder.toString(), ShopDTO.class);
 
         shopDAO.addShop(newShop);
 
@@ -77,7 +78,7 @@ public class ShopServlet extends HttpServlet {
         }
 
         Gson gson = new Gson();
-        Shop updatedShop = gson.fromJson(jsonBuilder.toString(), Shop.class);
+        ShopDTO updatedShop = gson.fromJson(jsonBuilder.toString(), ShopDTO.class);
 
         shopDAO.updateShop(updatedShop);
 

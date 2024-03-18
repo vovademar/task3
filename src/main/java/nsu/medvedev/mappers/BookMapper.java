@@ -8,7 +8,7 @@ public class BookMapper {
         BookDTO bookDTO = new BookDTO();
         bookDTO.setId(book.getId());
         bookDTO.setAuthor(book.getAuthor());
-        bookDTO.setShopsDTO(book.getShops());
+        bookDTO.setShops(book.getShops());
         bookDTO.setTitle(book.getTitle());
         return bookDTO;
     }
@@ -17,7 +17,7 @@ public class BookMapper {
         Book book = new Book();
         book.setAuthor(bookDTO.getAuthor());
         book.setId(bookDTO.getId());
-        book.setShops(bookDTO.getShopsDTO());
+        book.setShops(bookDTO.getShops());
         book.setTitle(bookDTO.getTitle());
         return book;
     }
