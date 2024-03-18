@@ -79,7 +79,27 @@ public class ShopDAO {
         }
     }
 
-    public void updateShop(Shop shop){
-        String query = "";
+    public void updateShop(Shop shop) {
+        String query = "UPDATE Shop SET name = ? WHERE id = ?";
+        try (PreparedStatement statement = connection.prepareStatement(query)) {
+            statement.setString(1, shop.getName());
+            statement.setLong(2, shop.getId());
+            statement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw new RuntimeException("Failed to update shop in the database", e);
+        }
+    }
+
+
+    public void deleteShop(long shopId) {
+        String query = "DELETE FROM Shop WHERE id = ?";
+        try (PreparedStatement statement = connection.prepareStatement(query)) {
+            statement.setLong(1, shopId);
+            statement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw new RuntimeException("Failed to delete shop from the database", e);
+        }
     }
 }

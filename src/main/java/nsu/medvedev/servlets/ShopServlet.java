@@ -66,4 +66,39 @@ public class ShopServlet extends HttpServlet {
         out.println("Shop added successfully");
     }
 
+
+    @Override
+    protected void doPut(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        BufferedReader reader = request.getReader();
+        StringBuilder jsonBuilder = new StringBuilder();
+        String line;
+        while ((line = reader.readLine()) != null) {
+            jsonBuilder.append(line);
+        }
+
+        Gson gson = new Gson();
+        Shop updatedShop = gson.fromJson(jsonBuilder.toString(), Shop.class);
+
+        shopDAO.updateShop(updatedShop);
+
+        response.setContentType("text/plain");
+        response.setStatus(HttpServletResponse.SC_OK);
+        PrintWriter out = response.getWriter();
+        out.println("Shop updated successfully");
+    }
+
+    @Override
+    protected void doDelete(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        long shopId = Long.parseLong(request.getParameter("id"));
+
+        shopDAO.deleteShop(shopId);
+
+        response.setContentType("text/plain");
+        response.setStatus(HttpServletResponse.SC_OK);
+        PrintWriter out = response.getWriter();
+        out.println("Shop deleted successfully");
+    }
+
+
+
 }
