@@ -3,6 +3,7 @@ package nsu.medvedev.DAO;
 import nsu.medvedev.entities.Author;
 import nsu.medvedev.entities.Book;
 import nsu.medvedev.entities.ShopDTO;
+import nsu.medvedev.exception.DaoException;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -37,7 +38,7 @@ public class ShopDAO {
                 }
             }
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            throw new DaoException("Failed to get all shops: " + e.getMessage());
         }
         return shops;
     }
@@ -63,8 +64,7 @@ public class ShopDAO {
                 books.add(book);
             }
         } catch (SQLException e) {
-            e.printStackTrace();
-            throw new RuntimeException("Failed to fetch books from the database", e);
+            throw new DaoException("Failed to fetch books from the database: " + e.getMessage());
         }
         return books;
     }
@@ -75,7 +75,7 @@ public class ShopDAO {
             statement.setString(1, shop.getName());
             statement.executeUpdate();
         } catch (SQLException e) {
-            throw new RuntimeException("Failed to add shop to the database", e);
+            throw new DaoException("Failed to add shop to the database: " + e.getMessage());
         }
     }
 
@@ -86,8 +86,7 @@ public class ShopDAO {
             statement.setLong(2, shop.getId());
             statement.executeUpdate();
         } catch (SQLException e) {
-            e.printStackTrace();
-            throw new RuntimeException("Failed to update shop in the database", e);
+            throw new DaoException("Failed to update shop in the database: " + e.getMessage());
         }
     }
 
@@ -98,8 +97,7 @@ public class ShopDAO {
             statement.setLong(1, shopId);
             statement.executeUpdate();
         } catch (SQLException e) {
-            e.printStackTrace();
-            throw new RuntimeException("Failed to delete shop from the database", e);
+            throw new DaoException("Failed to delete shop from the database: " + e.getMessage());
         }
     }
 }

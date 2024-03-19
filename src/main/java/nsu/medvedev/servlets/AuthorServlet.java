@@ -1,6 +1,7 @@
 package nsu.medvedev.servlets;
 
 import com.google.gson.Gson;
+import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
@@ -17,15 +18,16 @@ import java.util.List;
 
 @WebServlet("/authors")
 public class AuthorServlet extends HttpServlet {
-    private AuthorDAO authorDAO;
+    private static final String PLAIN = "text/plain";
+    private transient AuthorDAO authorDAO;
 
     @Override
-    public void init() {
+    public void init() throws ServletException {
         DataBaseConnection dataBaseConnection = new DataBaseConnection();
         try {
             authorDAO = new AuthorDAO(dataBaseConnection.connectToDB());
         } catch (SQLException | ClassNotFoundException e) {
-            throw new RuntimeException(e);
+            throw new ServletException("Failed to initialize AuthorDAO", e);
         }
     }
 
@@ -59,7 +61,7 @@ public class AuthorServlet extends HttpServlet {
 
         authorDAO.addAuthor(newAuthor);
 
-        response.setContentType("text/plain");
+        response.setContentType(PLAIN);
         response.setStatus(HttpServletResponse.SC_CREATED);
         PrintWriter out = response.getWriter();
         out.println("Author added successfully");
@@ -79,7 +81,7 @@ public class AuthorServlet extends HttpServlet {
 
         authorDAO.updateAuthor(updatedAuthor);
 
-        response.setContentType("text/plain");
+        response.setContentType(PLAIN);
         response.setStatus(HttpServletResponse.SC_OK);
         PrintWriter out = response.getWriter();
         out.println("Author updated successfully");
@@ -91,7 +93,7 @@ public class AuthorServlet extends HttpServlet {
 
         authorDAO.deleteAuthor(authorId);
 
-        response.setContentType("text/plain");
+        response.setContentType(PLAIN);
         response.setStatus(HttpServletResponse.SC_OK);
         PrintWriter out = response.getWriter();
         out.println("Book deleted successfully");

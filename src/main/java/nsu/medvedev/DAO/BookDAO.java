@@ -3,6 +3,7 @@ package nsu.medvedev.DAO;
 import nsu.medvedev.entities.Author;
 import nsu.medvedev.entities.BookDTO;
 import nsu.medvedev.entities.Shop;
+import nsu.medvedev.exception.DaoException;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -31,13 +32,12 @@ public class BookDAO {
                 books.add(book);
             }
         } catch (SQLException e) {
-            e.printStackTrace();
-            throw new RuntimeException("Failed to fetch books from the database", e);
+            throw new DaoException("Failed to fetch books from the database" + e.getMessage());
         }
         return books;
     }
 
-    public List<Shop> getShopsByID(long bookId){
+    public List<Shop> getShopsByID(long bookId) {
         List<Shop> shops = new ArrayList<>();
         String query = """
                 SELECT shop_id, name FROM Book
@@ -45,17 +45,17 @@ public class BookDAO {
                 inner join Shop S on S.id = BS.shop_id
                 where book_id = ?;
                 """;
-        try(PreparedStatement statement = connection.prepareStatement(query)) {
+        try (PreparedStatement statement = connection.prepareStatement(query)) {
             statement.setLong(1, bookId);
             ResultSet resultSet = statement.executeQuery();
             while (resultSet.next()) {
                 long id = resultSet.getLong("shop_id");
                 String name = resultSet.getString("name");
-                Shop shop = new Shop(id,name);
+                Shop shop = new Shop(id, name);
                 shops.add(shop);
             }
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            throw new DaoException("Failed to get shop by id: " + e.getMessage());
         }
         return shops;
     }
@@ -68,8 +68,7 @@ public class BookDAO {
             statement.setLong(3, book.getId());
             statement.executeUpdate();
         } catch (SQLException e) {
-            e.printStackTrace();
-            throw new RuntimeException("Failed to update book in the database", e);
+            throw new DaoException("Failed to update book in the database: " + e.getMessage());
         }
     }
 
@@ -79,8 +78,7 @@ public class BookDAO {
             statement.setLong(1, bookId);
             statement.executeUpdate();
         } catch (SQLException e) {
-            e.printStackTrace();
-            throw new RuntimeException("Failed to delete book from the database", e);
+            throw new DaoException("Failed to delete book from the database: " + e.getMessage());
         }
     }
 
@@ -97,8 +95,7 @@ public class BookDAO {
                 throw new IllegalArgumentException("Author with id " + authorId + " not found");
             }
         } catch (SQLException e) {
-            e.printStackTrace();
-            throw new RuntimeException("Failed to fetch author from the database", e);
+            throw new DaoException("Failed to fetch author from the database: " + e.getMessage());
         }
     }
 
@@ -118,8 +115,7 @@ public class BookDAO {
                 throw new SQLException("Failed to get generated key for inserted book");
             }
         } catch (SQLException e) {
-            e.printStackTrace();
-            throw new RuntimeException("Failed to add book to the database", e);
+            throw new DaoException("Failed to add book to the database: " + e.getMessage());
         }
 
         String query1 = """
@@ -137,8 +133,7 @@ public class BookDAO {
                 throw new SQLException("Failed to insert book into database");
             }
         } catch (SQLException e) {
-            e.printStackTrace();
-            throw new RuntimeException("Failed to add book to the database", e);
+            throw new DaoException("Failed to add book to the database: " + e.getMessage());
         }
 
     }

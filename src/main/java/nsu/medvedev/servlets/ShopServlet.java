@@ -15,19 +15,20 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.SQLException;
 import java.util.List;
+import java.util.logging.Logger;
 
 @WebServlet("/shops")
 public class ShopServlet extends HttpServlet {
     private static final String PLAIN = "text/plain";
-    private ShopDAO shopDAO;
+    private transient ShopDAO shopDAO;
 
     @Override
-    public void init() {
+    public void init() throws ServletException {
         DataBaseConnection dataBaseConnection = new DataBaseConnection();
         try {
             shopDAO = new ShopDAO(dataBaseConnection.connectToDB());
         } catch (SQLException | ClassNotFoundException e) {
-            throw new RuntimeException(e);
+            throw new ServletException("Failed to initialize ShopDAO", e);
         }
     }
 
@@ -54,7 +55,6 @@ public class ShopServlet extends HttpServlet {
         }
 
         Gson gson = new Gson();
-        System.out.println(jsonBuilder + " - jsonbuilder");
         ShopDTO newShop = gson.fromJson(jsonBuilder.toString(), ShopDTO.class);
 
         shopDAO.addShop(newShop);
@@ -97,7 +97,6 @@ public class ShopServlet extends HttpServlet {
         PrintWriter out = response.getWriter();
         out.println("Shop deleted successfully");
     }
-
 
 
 }

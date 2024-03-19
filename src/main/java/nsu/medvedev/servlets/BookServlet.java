@@ -19,15 +19,15 @@ import java.util.List;
 @WebServlet("/books")
 public class BookServlet extends HttpServlet {
     private static final String PLAIN = "text/plain";
-    private BookDAO bookDAO;
+    private transient BookDAO bookDAO;
 
     @Override
-    public void init() {
+    public void init() throws ServletException {
         DataBaseConnection dataBaseConnection = new DataBaseConnection();
         try {
             bookDAO = new BookDAO(dataBaseConnection.connectToDB());
         } catch (SQLException | ClassNotFoundException e) {
-            throw new RuntimeException(e);
+            throw new ServletException("Failed to initialize BookDAO", e);
         }
     }
 

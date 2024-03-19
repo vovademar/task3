@@ -2,6 +2,7 @@ package nsu.medvedev.DAO;
 
 import nsu.medvedev.entities.AuthorDTO;
 import nsu.medvedev.entities.Book;
+import nsu.medvedev.exception.DaoException;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -28,8 +29,7 @@ public class AuthorDAO {
                 authors.add(author);
             }
         } catch (SQLException e) {
-            e.printStackTrace();
-            throw new RuntimeException("Failed to fetch authors from the database", e);
+            throw new DaoException("Failed to fetch authors from the database: " + e.getMessage());
         }
         return authors;
     }
@@ -47,8 +47,7 @@ public class AuthorDAO {
                 books.add(book);
             }
         } catch (SQLException e) {
-            e.printStackTrace();
-            throw new RuntimeException("Failed to fetch books from the database", e);
+            throw new DaoException("Failed to fetch books from the database: " + e.getMessage());
         }
         return books;
     }
@@ -68,8 +67,8 @@ public class AuthorDAO {
                 throw new SQLException("Failed to get generated key for inserted author");
             }
         } catch (SQLException e) {
-            e.printStackTrace();
-            throw new RuntimeException("Failed to add author to the database", e);
+
+            throw new DaoException("Failed to add author to the database: "+ e.getMessage());
         }
     }
 
@@ -83,8 +82,7 @@ public class AuthorDAO {
                 throw new SQLException("Failed to update author with id " + author.getId());
             }
         } catch (SQLException e) {
-            e.printStackTrace();
-            throw new RuntimeException("Failed to update author in the database", e);
+            throw new DaoException("Failed to update author in the database: " + e.getMessage());
         }
     }
 
@@ -94,8 +92,7 @@ public class AuthorDAO {
         try (PreparedStatement statement = connection.prepareStatement(query)) {
             statement.setLong(1, authorId);
         } catch (SQLException e) {
-            e.printStackTrace();
-            throw new RuntimeException("Failed to update author in the database", e);
+            throw new DaoException("Failed to update author in the database: " + e.getMessage());
         }
     }
 
