@@ -39,33 +39,53 @@ public class BookServlet extends HttpServlet {
         String jsonBooks = gson.toJson(books);
 
         response.setContentType("application/json");
-        PrintWriter out = response.getWriter();
-        out.print(jsonBooks);
-        out.flush();
+        try {
+            PrintWriter out = response.getWriter();
+            out.print(jsonBooks);
+            out.flush();
+        } catch (IOException e) {
+            response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+        }
     }
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        BufferedReader reader = request.getReader();
-        StringBuilder jsonBuilder = new StringBuilder();
-        String line;
-        while ((line = reader.readLine()) != null) {
-            jsonBuilder.append(line);
+        try {
+            BookDTO newBook = getReader(request);
+            bookDAO.addBook(newBook);
+        } catch (IOException e) {
+            response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
         }
-
-        Gson gson = new Gson();
-        BookDTO newBook = gson.fromJson(jsonBuilder.toString(), BookDTO.class);
-
-        bookDAO.addBook(newBook);
-
         response.setContentType(PLAIN);
         response.setStatus(HttpServletResponse.SC_CREATED);
-        PrintWriter out = response.getWriter();
-        out.println("Book added successfully");
+        try {
+            PrintWriter out = response.getWriter();
+            out.println("Book added successfully");
+        } catch (IOException e) {
+            response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+        }
     }
 
     @Override
     protected void doPut(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        try {
+            BookDTO updatedBook = getReader(request);
+            bookDAO.updateBook(updatedBook);
+        } catch (IOException e) {
+            response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+        }
+
+        response.setContentType(PLAIN);
+        response.setStatus(HttpServletResponse.SC_OK);
+        try {
+            PrintWriter out = response.getWriter();
+            out.println("Book updated successfully");
+        } catch (IOException e) {
+            response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+        }
+    }
+
+    private BookDTO getReader(HttpServletRequest request) throws IOException {
         BufferedReader reader = request.getReader();
         StringBuilder jsonBuilder = new StringBuilder();
         String line;
@@ -74,26 +94,26 @@ public class BookServlet extends HttpServlet {
         }
 
         Gson gson = new Gson();
-        BookDTO updatedBook = gson.fromJson(jsonBuilder.toString(), BookDTO.class);
-
-        bookDAO.updateBook(updatedBook);
-
-        response.setContentType(PLAIN);
-        response.setStatus(HttpServletResponse.SC_OK);
-        PrintWriter out = response.getWriter();
-        out.println("Book updated successfully");
+        return gson.fromJson(jsonBuilder.toString(), BookDTO.class);
     }
 
     @Override
     protected void doDelete(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        long bookId = Long.parseLong(request.getParameter("id"));
-
-        bookDAO.deleteBook(bookId);
+        try {
+            long bookId = Long.parseLong(request.getParameter("id"));
+            bookDAO.deleteBook(bookId);
+        } catch (NumberFormatException e) {
+            response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+        }
 
         response.setContentType(PLAIN);
         response.setStatus(HttpServletResponse.SC_OK);
-        PrintWriter out = response.getWriter();
-        out.println("Book deleted successfully");
+        try {
+            PrintWriter out = response.getWriter();
+            out.println("Book deleted successfully");
+        } catch (IOException e) {
+            response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+        }
     }
 
 }
