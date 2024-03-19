@@ -6,8 +6,7 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import nsu.medvedev.DAO.AuthorDAO;
-import nsu.medvedev.DataBaseConnection;
-import nsu.medvedev.entities.Author;
+import nsu.medvedev.database.DataBaseConnection;
 import nsu.medvedev.entities.AuthorDTO;
 
 import java.io.BufferedReader;

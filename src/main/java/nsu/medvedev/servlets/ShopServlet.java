@@ -6,11 +6,8 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import nsu.medvedev.DAO.BookDAO;
 import nsu.medvedev.DAO.ShopDAO;
-import nsu.medvedev.DataBaseConnection;
-import nsu.medvedev.entities.Book;
-import nsu.medvedev.entities.Shop;
+import nsu.medvedev.database.DataBaseConnection;
 import nsu.medvedev.entities.ShopDTO;
 
 import java.io.BufferedReader;
