@@ -32,7 +32,7 @@ public class ShopServlet extends HttpServlet {
     }
 
     @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) {
         List<ShopDTO> shops = shopDAO.getAllShops();
 
         Gson gson = new Gson();
@@ -50,7 +50,7 @@ public class ShopServlet extends HttpServlet {
     }
 
     @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) {
         try {
             ShopDTO newShop = getReader(request);
             shopDAO.addShop(newShop);
@@ -83,7 +83,7 @@ public class ShopServlet extends HttpServlet {
 
 
     @Override
-    protected void doPut(HttpServletRequest request, HttpServletResponse response) throws IOException {
+    protected void doPut(HttpServletRequest request, HttpServletResponse response) {
 
         try {
             shopDAO.updateShop(getReader(request));
@@ -103,7 +103,7 @@ public class ShopServlet extends HttpServlet {
     }
 
     @Override
-    protected void doDelete(HttpServletRequest request, HttpServletResponse response) throws IOException {
+    protected void doDelete(HttpServletRequest request, HttpServletResponse response) {
         try {
             long shopId = Long.parseLong(request.getParameter("id"));
             shopDAO.deleteShop(shopId);

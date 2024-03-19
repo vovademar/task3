@@ -32,7 +32,7 @@ public class BookServlet extends HttpServlet {
     }
 
     @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) {
         List<BookDTO> books = bookDAO.getAllBooks();
 
         Gson gson = new Gson();
@@ -49,7 +49,7 @@ public class BookServlet extends HttpServlet {
     }
 
     @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) {
         try {
             BookDTO newBook = getReader(request);
             bookDAO.addBook(newBook);
@@ -67,7 +67,7 @@ public class BookServlet extends HttpServlet {
     }
 
     @Override
-    protected void doPut(HttpServletRequest request, HttpServletResponse response) throws IOException {
+    protected void doPut(HttpServletRequest request, HttpServletResponse response) {
         try {
             BookDTO updatedBook = getReader(request);
             bookDAO.updateBook(updatedBook);
@@ -98,7 +98,7 @@ public class BookServlet extends HttpServlet {
     }
 
     @Override
-    protected void doDelete(HttpServletRequest request, HttpServletResponse response) throws IOException {
+    protected void doDelete(HttpServletRequest request, HttpServletResponse response) {
         try {
             long bookId = Long.parseLong(request.getParameter("id"));
             bookDAO.deleteBook(bookId);

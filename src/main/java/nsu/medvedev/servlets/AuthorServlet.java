@@ -32,7 +32,7 @@ public class AuthorServlet extends HttpServlet {
     }
 
     @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) {
 
         List<AuthorDTO> authors;
         authors = authorDAO.getAllAuthors();
@@ -53,7 +53,7 @@ public class AuthorServlet extends HttpServlet {
 
 
     @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) {
 
         try {
             AuthorDTO newAuthor = getReader(request);
@@ -85,7 +85,7 @@ public class AuthorServlet extends HttpServlet {
     }
 
     @Override
-    protected void doPut(HttpServletRequest request, HttpServletResponse response) throws IOException {
+    protected void doPut(HttpServletRequest request, HttpServletResponse response) {
         try {
             authorDAO.updateAuthor(getReader(request));
         } catch (IOException e) {
@@ -104,7 +104,7 @@ public class AuthorServlet extends HttpServlet {
     }
 
     @Override
-    protected void doDelete(HttpServletRequest request, HttpServletResponse response) throws IOException {
+    protected void doDelete(HttpServletRequest request, HttpServletResponse response) {
         try {
             long authorId = Long.parseLong(request.getParameter("id"));
             authorDAO.deleteAuthor(authorId);
