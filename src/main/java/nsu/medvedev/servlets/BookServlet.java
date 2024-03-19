@@ -26,7 +26,7 @@ public class BookServlet extends HttpServlet {
         DataBaseConnection dataBaseConnection = new DataBaseConnection();
         try {
             bookDAO = new BookDAO(dataBaseConnection.connectToDB());
-        } catch (SQLException | ClassNotFoundException e) {
+        } catch (SQLException e) {
             throw new ServletException("Failed to initialize BookDAO", e);
         }
     }

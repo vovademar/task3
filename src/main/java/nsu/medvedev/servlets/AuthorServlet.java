@@ -26,7 +26,7 @@ public class AuthorServlet extends HttpServlet {
         DataBaseConnection dataBaseConnection = new DataBaseConnection();
         try {
             authorDAO = new AuthorDAO(dataBaseConnection.connectToDB());
-        } catch (SQLException | ClassNotFoundException e) {
+        } catch (SQLException e) {
             throw new ServletException("Failed to initialize AuthorDAO", e);
         }
     }

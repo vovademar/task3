@@ -27,7 +27,7 @@ public class ShopServlet extends HttpServlet {
         DataBaseConnection dataBaseConnection = new DataBaseConnection();
         try {
             shopDAO = new ShopDAO(dataBaseConnection.connectToDB());
-        } catch (SQLException | ClassNotFoundException e) {
+        } catch (SQLException e) {
             throw new ServletException("Failed to initialize ShopDAO", e);
         }
     }
