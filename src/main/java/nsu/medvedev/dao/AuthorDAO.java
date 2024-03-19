@@ -1,4 +1,4 @@
-package nsu.medvedev.DAO;
+package nsu.medvedev.dao;
 
 import nsu.medvedev.entities.AuthorDTO;
 import nsu.medvedev.entities.Book;
@@ -93,7 +93,6 @@ public class AuthorDAO {
         String query = "DELETE FROM Author WHERE id = ?";
         try (PreparedStatement statement = connection.prepareStatement(query)) {
             statement.setLong(1, authorId);
-            int rowsUpdated = statement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
             throw new RuntimeException("Failed to update author in the database", e);

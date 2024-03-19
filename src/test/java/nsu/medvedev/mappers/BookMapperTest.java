@@ -40,7 +40,7 @@ class BookMapperTest {
     }
 
     @Test
-    public void testToBookDTO() {
+    void testToBookDTO() {
         BookDTO mappedBookDTO = BookMapper.toBookDTO(book);
         assertEquals(bookDTO.getId(), mappedBookDTO.getId());
         assertEquals(bookDTO.getTitle(), mappedBookDTO.getTitle());
@@ -49,7 +49,7 @@ class BookMapperTest {
     }
 
     @Test
-    public void testToBookEntity() {
+    void testToBookEntity() {
         Book mappedBook = BookMapper.toBookEntity(bookDTO);
         assertEquals(book.getId(), mappedBook.getId());
         assertEquals(book.getTitle(), mappedBook.getTitle());

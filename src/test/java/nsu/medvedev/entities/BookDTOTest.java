@@ -8,7 +8,7 @@ import org.junit.jupiter.api.Test;
 import java.util.ArrayList;
 import java.util.List;
 
-public class BookDTOTest {
+class BookDTOTest {
 
     private BookDTO book;
     private Author author;
@@ -20,27 +20,27 @@ public class BookDTOTest {
     }
 
     @Test
-    public void testSetAndGetId() {
+    void testSetAndGetId() {
         Long id = 1L;
         book.setId(id);
         assertEquals(id, book.getId());
     }
 
     @Test
-    public void testSetAndgetTitle() {
+    void testSetAndgetTitle() {
         String title = "Book Title";
         book.setTitle(title);
         assertEquals(title, book.getTitle());
     }
 
     @Test
-    public void testSetAndGetAuthor() {
+    void testSetAndGetAuthor() {
         book.setAuthor(author);
         assertEquals(author, book.getAuthor());
     }
 
     @Test
-    public void testSetAndGetShops() {
+    void testSetAndGetShops() {
         List<Shop> shops = new ArrayList<>();
         shops.add(new Shop());
         shops.add(new Shop());
@@ -49,7 +49,7 @@ public class BookDTOTest {
     }
 
     @Test
-    public void testEmptyConstructor() {
+    void testEmptyConstructor() {
         BookDTO emptyBook = new BookDTO();
         assertNull(emptyBook.getId());
         assertNull(emptyBook.getTitle());
@@ -58,7 +58,7 @@ public class BookDTOTest {
     }
 
     @Test
-    public void testParameterizedConstructor() {
+    void testParameterizedConstructor() {
         Long id = 1L;
         String title = "Book Title";
         List<Shop> shops = new ArrayList<>();
@@ -72,7 +72,7 @@ public class BookDTOTest {
     }
 
     @Test
-    public void testOneMoreParameterizedConstructor() {
+    void testOneMoreParameterizedConstructor() {
         Long id = 1L;
         String title = "Book Title";
         Author author = new Author();

@@ -32,7 +32,7 @@ class AuthorMapperTest {
     }
 
     @Test
-    public void testToAuthorDTO() {
+    void testToAuthorDTO() {
         AuthorDTO mappedAuthorDTO = AuthorMapper.toAuthorDTO(author);
         assertEquals(authorDTO.getId(), mappedAuthorDTO.getId());
         assertEquals(authorDTO.getName(), mappedAuthorDTO.getName());
@@ -40,7 +40,7 @@ class AuthorMapperTest {
     }
 
     @Test
-    public void testToAuthorModel() {
+    void testToAuthorModel() {
         Author mappedAuthor = AuthorMapper.toAuthorModel(authorDTO);
         assertEquals(author.getId(), mappedAuthor.getId());
         assertEquals(author.getName(), mappedAuthor.getName());

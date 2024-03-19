@@ -32,7 +32,7 @@ class ShopMapperTest {
     }
 
     @Test
-    public void testToShopDto() {
+    void testToShopDto() {
         ShopDTO mappedShopDTO = ShopMapper.toShopDto(shop);
         assertEquals(shopDTO.getId(), mappedShopDTO.getId());
         assertEquals(shopDTO.getName(), mappedShopDTO.getName());
@@ -40,7 +40,7 @@ class ShopMapperTest {
     }
 
     @Test
-    public void testToShopEntity() {
+    void testToShopEntity() {
         Shop mappedShop = ShopMapper.toShopEntity(shopDTO);
         assertEquals(shop.getId(), mappedShop.getId());
         assertEquals(shop.getName(), mappedShop.getName());

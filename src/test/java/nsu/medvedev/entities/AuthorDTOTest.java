@@ -18,21 +18,21 @@ class AuthorDTOTest {
     }
 
     @Test
-    public void testSetAndGetId() {
+    void testSetAndGetId() {
         Long id = 1L;
         author.setId(id);
         assertEquals(id, author.getId());
     }
 
     @Test
-    public void testSetAndGetName() {
+    void testSetAndGetName() {
         String name = "John Doe";
         author.setName(name);
         assertEquals(name, author.getName());
     }
 
     @Test
-    public void testSetAndGetBooks() {
+    void testSetAndGetBooks() {
         List<Book> books = new ArrayList<>();
         books.add(new Book());
         books.add(new Book());
@@ -41,7 +41,7 @@ class AuthorDTOTest {
     }
 
     @Test
-    public void testEmptyConstructor() {
+    void testEmptyConstructor() {
         AuthorDTO emptyAuthor = new AuthorDTO();
         assertNull(emptyAuthor.getId());
         assertNull(emptyAuthor.getName());
@@ -49,7 +49,7 @@ class AuthorDTOTest {
     }
 
     @Test
-    public void testParameterizedConstructor() {
+    void testParameterizedConstructor() {
         Long id = 1L;
         String name = "Jane Smith";
         List<Book> books = new ArrayList<>();

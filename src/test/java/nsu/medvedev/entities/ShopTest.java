@@ -10,7 +10,7 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
 
-public class ShopTest {
+class ShopTest {
 
     private Shop shop;
 
@@ -20,21 +20,21 @@ public class ShopTest {
     }
 
     @Test
-    public void testSetAndGetId() {
+    void testSetAndGetId() {
         Long id = 1L;
         shop.setId(id);
         assertEquals(id, shop.getId());
     }
 
     @Test
-    public void testSetAndgetName() {
+    void testSetAndGetName() {
         String name = "Shop Name";
         shop.setName(name);
         assertEquals(name, shop.getName());
     }
 
     @Test
-    public void testSetAndGetBooks() {
+    void testSetAndGetBooks() {
         List<Book> books = new ArrayList<>();
         books.add(new Book());
         books.add(new Book());
@@ -43,7 +43,7 @@ public class ShopTest {
     }
 
     @Test
-    public void testEmptyConstructor() {
+    void testEmptyConstructor() {
         Shop emptyShop = new Shop();
         assertNull(emptyShop.getId());
         assertNull(emptyShop.getName());
@@ -51,7 +51,7 @@ public class ShopTest {
     }
 
     @Test
-    public void testParameterizedConstructor() {
+    void testParameterizedConstructor() {
         Long id = 1L;
         String name = "Shop Name";
         List<Book> books = new ArrayList<>();
@@ -63,7 +63,7 @@ public class ShopTest {
     }
 
     @Test
-    public void testOneMoreParameterizedConstructor() {
+    void testOneMoreParameterizedConstructor() {
         Long id = 1L;
         String name = "Shop Name";
         Shop paramShop = new Shop(id, name);

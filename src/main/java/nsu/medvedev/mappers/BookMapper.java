@@ -4,6 +4,9 @@ import nsu.medvedev.entities.Book;
 import nsu.medvedev.entities.BookDTO;
 
 public class BookMapper {
+    private BookMapper() {
+    }
+
     public static BookDTO toBookDTO(Book book) {
         BookDTO bookDTO = new BookDTO();
         bookDTO.setId(book.getId());

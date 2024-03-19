@@ -6,7 +6,7 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import nsu.medvedev.DAO.ShopDAO;
+import nsu.medvedev.dao.ShopDAO;
 import nsu.medvedev.database.DataBaseConnection;
 import nsu.medvedev.entities.ShopDTO;
 
