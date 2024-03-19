@@ -8,13 +8,13 @@ public class ShopMapper {
         ShopDTO shopDTO = new ShopDTO();
         shopDTO.setName(shop.getName());
         shopDTO.setId(shop.getId());
-        shopDTO.setBooksDTO(shop.getBooks());
+        shopDTO.setBooks(shop.getBooks());
         return shopDTO;
     }
 
     public static Shop toShopEntity(ShopDTO shopDTO) {
         Shop shop = new Shop();
-        shop.setBooks(shopDTO.getBooksDTO());
+        shop.setBooks(shopDTO.getBooks());
         shop.setId(shopDTO.getId());
         shop.setName(shopDTO.getName());
         return shop;

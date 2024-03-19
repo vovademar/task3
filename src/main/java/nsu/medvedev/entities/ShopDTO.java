@@ -33,11 +33,11 @@ public class ShopDTO {
         this.name = name;
     }
 
-    public List<Book> getBooksDTO() {
+    public List<Book> getBooks() {
         return booksDTO;
     }
 
-    public void setBooksDTO(List<Book> booksDTO) {
+    public void setBooks(List<Book> booksDTO) {
         this.booksDTO = booksDTO;
     }
 }
