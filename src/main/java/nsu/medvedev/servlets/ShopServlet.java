@@ -15,7 +15,6 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.SQLException;
 import java.util.List;
-import java.util.logging.Logger;
 
 @WebServlet("/shops")
 public class ShopServlet extends HttpServlet {
@@ -40,13 +39,37 @@ public class ShopServlet extends HttpServlet {
         String jsonBooks = gson.toJson(shops);
 
         response.setContentType("application/json");
-        PrintWriter out = response.getWriter();
-        out.print(jsonBooks);
-        out.flush();
+        try {
+            PrintWriter out = response.getWriter();
+            out.print(jsonBooks);
+            out.flush();
+        } catch (IOException e) {
+            response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+        }
+
     }
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        try {
+            ShopDTO newShop = getReader(request);
+            shopDAO.addShop(newShop);
+        } catch (IOException e) {
+            response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+        }
+
+        response.setContentType(PLAIN);
+        response.setStatus(HttpServletResponse.SC_CREATED);
+        try {
+            PrintWriter out = response.getWriter();
+            out.println("Shop added successfully");
+        } catch (IOException e) {
+            response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+        }
+
+    }
+
+    private ShopDTO getReader(HttpServletRequest request) throws IOException {
         BufferedReader reader = request.getReader();
         StringBuilder jsonBuilder = new StringBuilder();
         String line;
@@ -55,47 +78,48 @@ public class ShopServlet extends HttpServlet {
         }
 
         Gson gson = new Gson();
-        ShopDTO newShop = gson.fromJson(jsonBuilder.toString(), ShopDTO.class);
-
-        shopDAO.addShop(newShop);
-
-        response.setContentType(PLAIN);
-        response.setStatus(HttpServletResponse.SC_CREATED);
-        PrintWriter out = response.getWriter();
-        out.println("Shop added successfully");
+        return gson.fromJson(jsonBuilder.toString(), ShopDTO.class);
     }
 
 
     @Override
     protected void doPut(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        BufferedReader reader = request.getReader();
-        StringBuilder jsonBuilder = new StringBuilder();
-        String line;
-        while ((line = reader.readLine()) != null) {
-            jsonBuilder.append(line);
+
+        try {
+            shopDAO.updateShop(getReader(request));
+        } catch (IOException e) {
+            response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+
         }
-
-        Gson gson = new Gson();
-        ShopDTO updatedShop = gson.fromJson(jsonBuilder.toString(), ShopDTO.class);
-
-        shopDAO.updateShop(updatedShop);
 
         response.setContentType(PLAIN);
         response.setStatus(HttpServletResponse.SC_OK);
-        PrintWriter out = response.getWriter();
-        out.println("Shop updated successfully");
+        try {
+            PrintWriter out = response.getWriter();
+            out.println("Shop updated successfully");
+        } catch (IOException e) {
+            response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+        }
     }
 
     @Override
     protected void doDelete(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        long shopId = Long.parseLong(request.getParameter("id"));
-
-        shopDAO.deleteShop(shopId);
+        try {
+            long shopId = Long.parseLong(request.getParameter("id"));
+            shopDAO.deleteShop(shopId);
+        } catch (NumberFormatException e) {
+            response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+        }
 
         response.setContentType(PLAIN);
         response.setStatus(HttpServletResponse.SC_OK);
-        PrintWriter out = response.getWriter();
-        out.println("Shop deleted successfully");
+        try {
+            PrintWriter out = response.getWriter();
+            out.println("Shop deleted successfully");
+        } catch (IOException e) {
+            response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+        }
+
     }
 
 
