@@ -5,7 +5,7 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import nsu.medvedev.dao.AuthorDAO;
+import nsu.medvedev.DAO.AuthorDAO;
 import nsu.medvedev.database.DataBaseConnection;
 import nsu.medvedev.entities.AuthorDTO;
 

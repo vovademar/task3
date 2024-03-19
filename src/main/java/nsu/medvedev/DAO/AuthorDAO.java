@@ -1,4 +1,4 @@
-package nsu.medvedev.dao;
+package nsu.medvedev.DAO;
 
 import nsu.medvedev.entities.AuthorDTO;
 import nsu.medvedev.entities.Book;

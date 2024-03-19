@@ -6,7 +6,7 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import nsu.medvedev.dao.ShopDAO;
+import nsu.medvedev.DAO.ShopDAO;
 import nsu.medvedev.database.DataBaseConnection;
 import nsu.medvedev.entities.ShopDTO;
 
@@ -18,6 +18,7 @@ import java.util.List;
 
 @WebServlet("/shops")
 public class ShopServlet extends HttpServlet {
+    private static final String PLAIN = "text/plain";
     private ShopDAO shopDAO;
 
     @Override
@@ -58,7 +59,7 @@ public class ShopServlet extends HttpServlet {
 
         shopDAO.addShop(newShop);
 
-        response.setContentType("text/plain");
+        response.setContentType(PLAIN);
         response.setStatus(HttpServletResponse.SC_CREATED);
         PrintWriter out = response.getWriter();
         out.println("Shop added successfully");
@@ -79,7 +80,7 @@ public class ShopServlet extends HttpServlet {
 
         shopDAO.updateShop(updatedShop);
 
-        response.setContentType("text/plain");
+        response.setContentType(PLAIN);
         response.setStatus(HttpServletResponse.SC_OK);
         PrintWriter out = response.getWriter();
         out.println("Shop updated successfully");
@@ -91,7 +92,7 @@ public class ShopServlet extends HttpServlet {
 
         shopDAO.deleteShop(shopId);
 
-        response.setContentType("text/plain");
+        response.setContentType(PLAIN);
         response.setStatus(HttpServletResponse.SC_OK);
         PrintWriter out = response.getWriter();
         out.println("Shop deleted successfully");

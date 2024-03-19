@@ -1,4 +1,4 @@
-package nsu.medvedev.dao;
+package nsu.medvedev.DAO;
 
 
 class AuthorDAOTest {

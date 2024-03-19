@@ -6,7 +6,7 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import nsu.medvedev.dao.BookDAO;
+import nsu.medvedev.DAO.BookDAO;
 import nsu.medvedev.database.DataBaseConnection;
 import nsu.medvedev.entities.BookDTO;
 
@@ -18,6 +18,7 @@ import java.util.List;
 
 @WebServlet("/books")
 public class BookServlet extends HttpServlet {
+    private static final String PLAIN = "text/plain";
     private BookDAO bookDAO;
 
     @Override
@@ -53,12 +54,11 @@ public class BookServlet extends HttpServlet {
         }
 
         Gson gson = new Gson();
-        System.out.println(jsonBuilder + " - jsonbuilder");
         BookDTO newBook = gson.fromJson(jsonBuilder.toString(), BookDTO.class);
 
         bookDAO.addBook(newBook);
 
-        response.setContentType("text/plain");
+        response.setContentType(PLAIN);
         response.setStatus(HttpServletResponse.SC_CREATED);
         PrintWriter out = response.getWriter();
         out.println("Book added successfully");
@@ -78,7 +78,7 @@ public class BookServlet extends HttpServlet {
 
         bookDAO.updateBook(updatedBook);
 
-        response.setContentType("text/plain");
+        response.setContentType(PLAIN);
         response.setStatus(HttpServletResponse.SC_OK);
         PrintWriter out = response.getWriter();
         out.println("Book updated successfully");
@@ -90,7 +90,7 @@ public class BookServlet extends HttpServlet {
 
         bookDAO.deleteBook(bookId);
 
-        response.setContentType("text/plain");
+        response.setContentType(PLAIN);
         response.setStatus(HttpServletResponse.SC_OK);
         PrintWriter out = response.getWriter();
         out.println("Book deleted successfully");
