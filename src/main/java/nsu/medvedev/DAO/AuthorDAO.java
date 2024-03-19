@@ -91,8 +91,9 @@ public class AuthorDAO {
         String query = "DELETE FROM Author WHERE id = ?";
         try (PreparedStatement statement = connection.prepareStatement(query)) {
             statement.setLong(1, authorId);
+            statement.executeUpdate();
         } catch (SQLException e) {
-            throw new DaoException("Failed to update author in the database: " + e.getMessage());
+            throw new DaoException("Failed to delete author in the database: " + e.getMessage());
         }
     }
 

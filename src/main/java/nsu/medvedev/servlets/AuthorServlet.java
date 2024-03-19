@@ -41,14 +41,38 @@ public class AuthorServlet extends HttpServlet {
         String jsonAuthors = gson.toJson(authors);
 
         response.setContentType("application/json");
-        PrintWriter out = response.getWriter();
-        out.print(jsonAuthors);
-        out.flush();
+        try {
+            PrintWriter out = response.getWriter();
+            out.print(jsonAuthors);
+            out.flush();
+        } catch (IOException e) {
+            response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+        }
+
     }
 
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
+
+        try {
+            AuthorDTO newAuthor = getReader(request);
+            authorDAO.addAuthor(newAuthor);
+        } catch (IOException e) {
+            response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+        }
+
+        response.setContentType(PLAIN);
+        response.setStatus(HttpServletResponse.SC_CREATED);
+        try {
+            PrintWriter out = response.getWriter();
+            out.println("Author added successfully");
+        } catch (IOException e) {
+            response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+        }
+    }
+
+    private AuthorDTO getReader(HttpServletRequest request) throws IOException {
         BufferedReader reader = request.getReader();
         StringBuilder jsonBuilder = new StringBuilder();
         String line;
@@ -57,45 +81,45 @@ public class AuthorServlet extends HttpServlet {
         }
 
         Gson gson = new Gson();
-        AuthorDTO newAuthor = gson.fromJson(jsonBuilder.toString(), AuthorDTO.class);
-
-        authorDAO.addAuthor(newAuthor);
-
-        response.setContentType(PLAIN);
-        response.setStatus(HttpServletResponse.SC_CREATED);
-        PrintWriter out = response.getWriter();
-        out.println("Author added successfully");
+        return gson.fromJson(jsonBuilder.toString(), AuthorDTO.class);
     }
 
     @Override
     protected void doPut(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        BufferedReader reader = request.getReader();
-        StringBuilder jsonBuilder = new StringBuilder();
-        String line;
-        while ((line = reader.readLine()) != null) {
-            jsonBuilder.append(line);
+        try {
+            authorDAO.updateAuthor(getReader(request));
+        } catch (IOException e) {
+            response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
         }
-
-        Gson gson = new Gson();
-        AuthorDTO updatedAuthor = gson.fromJson(jsonBuilder.toString(), AuthorDTO.class);
-
-        authorDAO.updateAuthor(updatedAuthor);
 
         response.setContentType(PLAIN);
         response.setStatus(HttpServletResponse.SC_OK);
-        PrintWriter out = response.getWriter();
-        out.println("Author updated successfully");
+        try {
+            PrintWriter out = response.getWriter();
+            out.println("Author updated successfully");
+        } catch (IOException e) {
+            response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+        }
+
     }
 
     @Override
     protected void doDelete(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        long authorId = Long.parseLong(request.getParameter("id"));
-
-        authorDAO.deleteAuthor(authorId);
+        try {
+            long authorId = Long.parseLong(request.getParameter("id"));
+            authorDAO.deleteAuthor(authorId);
+        } catch (NumberFormatException e) {
+            response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+        }
 
         response.setContentType(PLAIN);
         response.setStatus(HttpServletResponse.SC_OK);
-        PrintWriter out = response.getWriter();
-        out.println("Book deleted successfully");
+        try {
+            PrintWriter out = response.getWriter();
+            out.println("Author deleted successfully");
+        } catch (IOException e) {
+            response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+        }
+
     }
 }
