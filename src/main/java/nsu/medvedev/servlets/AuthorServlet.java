@@ -19,7 +19,7 @@ import java.util.List;
 @WebServlet("/authors")
 public class AuthorServlet extends HttpServlet {
     private static final String PLAIN = "text/plain";
-    private transient AuthorDAO authorDAO;
+    transient AuthorDAO authorDAO;
 
     @Override
     public void init() throws ServletException {

@@ -27,6 +27,10 @@ public class DataBaseConnection {
         return DriverManager.getConnection(url, user, password);
     }
 
+    public Connection connectToDB(String url, String user, String password) throws SQLException {
+        return DriverManager.getConnection(url, user, password);
+    }
+
     private Properties loadProperties() {
         try (InputStream input = getClass().getClassLoader().getResourceAsStream("config.properties")) {
             if (input == null) {
@@ -39,4 +43,5 @@ public class DataBaseConnection {
             throw new DataBaseException("Failed to load config.properties: " + e.getMessage());
         }
     }
+
 }

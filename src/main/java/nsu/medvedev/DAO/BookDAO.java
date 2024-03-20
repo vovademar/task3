@@ -123,10 +123,8 @@ public class BookDAO {
                 VALUES ((SELECT id from Book where title = ?), (SELECT id from shop where name = ?));
                 """;
         try (PreparedStatement statement = connection.prepareStatement(query1)) {
-            System.out.println(book.getShops().getFirst().getName() + " - shop");
             statement.setString(1, book.getTitle());
             statement.setString(2, book.getShops().getFirst().getName());
-            System.out.println(statement + " - statement");
             int rowsInserted = statement.executeUpdate();
 
             if (rowsInserted == 0) {
