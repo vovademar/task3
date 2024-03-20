@@ -5,7 +5,7 @@ import org.junit.jupiter.api.Test;
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class AuthorTest {
 
@@ -15,10 +15,10 @@ class AuthorTest {
         author.setName("Lermontov");
         author.setId(1L);
         List<Book> books = new ArrayList<>();
-        books.add(new Book(1L,"Title", author));
+        books.add(new Book(1L, "Title", author));
         author.setBooks(books);
 
-        assertEquals(1L,author.getId());
+        assertEquals(1L, author.getId());
         assertEquals("Lermontov", author.getName());
         assertEquals(books, author.getBooks());
     }

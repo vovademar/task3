@@ -104,7 +104,7 @@ class BookDAOTest {
 
     @Test
     @Order(3)
-    void deleteBook(){
+    void deleteBook() {
         bookDAO.deleteBook(2L);
         assertEquals(3, bookDAO.getAllBooks().size());
     }

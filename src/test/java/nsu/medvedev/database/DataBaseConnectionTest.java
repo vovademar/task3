@@ -1,7 +1,5 @@
 package nsu.medvedev.database;
 
-import nsu.medvedev.database.DataBaseConnection;
-import nsu.medvedev.exception.DataBaseException;
 import org.junit.jupiter.api.Test;
 
 import java.sql.Connection;

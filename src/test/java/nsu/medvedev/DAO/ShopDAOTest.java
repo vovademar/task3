@@ -8,10 +8,9 @@ import org.testcontainers.utility.DockerImageName;
 
 import java.sql.SQLException;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
-
 class ShopDAOTest {
 
     static PostgreSQLContainer<?> postgres = new PostgreSQLContainer<>(DockerImageName.parse("postgres:16.2-alpine3.19"))
@@ -39,15 +38,15 @@ class ShopDAOTest {
 
     @Test
     @Order(1)
-    void getAllShops(){
+    void getAllShops() {
         ShopDTO shopDTO = new ShopDTO(1L, "Shop");
         shopDAO.addShop(shopDTO);
-        assertEquals(1,shopDAO.getAllShops().size());
+        assertEquals(1, shopDAO.getAllShops().size());
     }
 
     @Test
     @Order(2)
-    void updateShops(){
+    void updateShops() {
         ShopDTO shop1 = new ShopDTO(2L, "Shop1");
         shopDAO.addShop(shop1);
         ShopDTO toUpdate = new ShopDTO(1L, "Updated Shop");
@@ -57,7 +56,7 @@ class ShopDAOTest {
 
     @Test
     @Order(3)
-    void deleteShop(){
+    void deleteShop() {
         shopDAO.deleteShop(1L);
         assertEquals(1, shopDAO.getAllShops().size());
     }
