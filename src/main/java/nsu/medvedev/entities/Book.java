@@ -27,6 +27,15 @@ public class Book {
         this.shops = shops;
     }
 
+    public Book(Long id, String title) {
+        this.id = id;
+        this.title = title;
+        this.author = null;
+        this.shops = new ArrayList<>();
+    }
+
+
+
 
     public Long getId() {
         return id;
