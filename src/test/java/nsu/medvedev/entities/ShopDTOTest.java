@@ -61,5 +61,17 @@ class ShopDTOTest {
         assertEquals(name, paramShop.getName());
         assertEquals(books, paramShop.getBooks());
     }
+
+    @Test
+    void testSetAndGet(){
+        List<Book> books = new ArrayList<>();
+        books.add(new Book());
+        shop.setId(1L);
+        shop.setName("ShopName");
+        shop.setBooks(books);
+        assertEquals("ShopName", shop.getName());
+        assertEquals(1L, shop.getId());
+        assertEquals(books, shop.getBooks());
+    }
 }
 

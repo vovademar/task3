@@ -1,5 +1,6 @@
 package nsu.medvedev.entities;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class ShopDTO {
@@ -16,6 +17,14 @@ public class ShopDTO {
         this.name = name;
         this.booksDTO = bookDTO;
     }
+
+
+    public ShopDTO(Long id, String name) {
+        this.id = id;
+        this.name = name;
+        this.booksDTO = new ArrayList<>();
+    }
+
 
     public Long getId() {
         return id;
