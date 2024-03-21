@@ -68,7 +68,7 @@ public class AuthorDAO {
             }
         } catch (SQLException e) {
 
-            throw new DaoException("Failed to add author to the database: "+ e.getMessage());
+            throw new DaoException("Failed to add author to the database: " + e.getMessage());
         }
     }
 

@@ -35,8 +35,6 @@ public class Book {
     }
 
 
-
-
     public Long getId() {
         return id;
     }
