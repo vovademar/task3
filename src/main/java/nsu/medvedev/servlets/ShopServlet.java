@@ -19,7 +19,7 @@ import java.util.List;
 @WebServlet("/shops")
 public class ShopServlet extends HttpServlet {
     private static final String PLAIN = "text/plain";
-    private transient ShopDAO shopDAO;
+    transient ShopDAO shopDAO;
 
     @Override
     public void init() throws ServletException {
